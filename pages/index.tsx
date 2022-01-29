@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import Header from "../components/Header/Header";
 import TodoItem from "../components/Todo/TodoItem";
 import { Todo } from "../interfaces/Todo";
 import styles from "../styles/Home.module.scss";
@@ -14,16 +15,17 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
-      {todos.map((todo: Todo) => (
+    <>
+      {todos.map((todo: Todo, index) => (
         <TodoItem
           title={todo.title}
           description={todo.description}
           date={todo.date}
           completed={todo.completed}
+          key={index}
         ></TodoItem>
       ))}
-    </div>
+    </>
   );
 };
 
