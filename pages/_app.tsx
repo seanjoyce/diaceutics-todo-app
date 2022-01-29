@@ -2,14 +2,18 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import Header from "../components/Header/Header";
+import { Provider } from "react-redux";
+import store from "../app/store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Header></Header>
-      <div className="container">
-        <Component {...pageProps} />{" "}
-      </div>
+      <Provider store={store}>
+        <Header></Header>
+        <div className="container">
+          <Component {...pageProps} />{" "}
+        </div>
+      </Provider>
     </>
   );
 }
