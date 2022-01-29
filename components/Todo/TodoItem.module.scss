@@ -1,7 +1,7 @@
 .todo {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   border-radius: 10px;
   background: #ececec;
   margin-bottom: 1rem;
@@ -11,9 +11,15 @@
   margin-right: 2rem;
 }
 
+.header {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
 .title {
   font-size: 18px;
   font-weight: bold;
+  flex-grow: 1;
 }
 
 .date {

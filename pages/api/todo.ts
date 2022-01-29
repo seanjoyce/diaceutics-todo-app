@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 
@@ -13,13 +12,10 @@ export default async function handler(
       });
       break;
     case "POST":
-      //Return Json
       break;
     case "PUT":
-      //Return Json
       break;
     case "DELETE":
-      //Return Json
       break;
   }
 }

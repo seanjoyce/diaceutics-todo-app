@@ -14,10 +14,12 @@ export default function TodoItem(props: Todo) {
         checked={completed}
       ></input>
       <div>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.date}>{date}</div>
+        <div className={styles.header}>
+          <div className={styles.title}>{title}</div>
+          <div className={styles.date}>{date}</div>
+        </div>
+        <div>{description}</div>
       </div>
-      <div>{description}</div>
     </div>
   );
 }
