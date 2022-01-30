@@ -11,6 +11,7 @@ export default function TodoList() {
     <div>
       {todos.map((todo: Todo, index: number) => (
         <TodoItem
+          id={todo.id}
           title={todo.title}
           description={todo.description}
           date={todo.date}

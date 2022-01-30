@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { Todo } from "../interfaces/Todo";
 import { addTodo } from "../app/todoSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const AddTodo: NextPage = () => {
   const [title, setTitle] = useState<string>("");
@@ -15,6 +16,7 @@ const AddTodo: NextPage = () => {
     event.preventDefault();
 
     const todo: Todo = {
+      id: uuidv4(),
       title,
       description,
       date: new Date(2022, 1, 1),

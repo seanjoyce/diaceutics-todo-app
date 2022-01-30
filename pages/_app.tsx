@@ -5,28 +5,35 @@ import Header from "../components/Header/Header";
 import { Provider } from "react-redux";
 import store from "../app/store";
 import { hydrate } from "../app/todoSlice";
+import { useEffect } from "react";
 
 const getTodosFromLocalStorage = () => {
   try {
-    const persistedState = localStorage.getItem("reduxState");
-    if (persistedState) return JSON.parse(persistedState);
+    if (typeof window !== "undefined") {
+      const persistedState = localStorage.getItem("reduxState");
+      if (persistedState) return JSON.parse(persistedState);
+    }
   } catch (e) {
     console.log(e);
   }
 };
 
-const todos = getTodosFromLocalStorage();
-if (todos) {
-  store.dispatch(hydrate(todos));
-}
-
 function MyApp({ Component, pageProps }: AppProps) {
   store.subscribe(() => {
-    localStorage.setItem(
-      "reduxState",
-      JSON.stringify(store.getState().todoState)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "reduxState",
+        JSON.stringify(store.getState().todoState)
+      );
+    }
   });
+
+  useEffect(() => {
+    const todos = getTodosFromLocalStorage();
+    if (todos) {
+      store.dispatch(hydrate(todos));
+    }
+  }, []);
 
   return (
     <Provider store={store}>

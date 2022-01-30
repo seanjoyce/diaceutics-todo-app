@@ -3,20 +3,15 @@ import styles from "./TodoItem.module.scss";
 import { Todo } from "../../interfaces/Todo";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch } from "react-redux";
+import { removeTodo, updateTodo } from "../../app/todoSlice";
 
-export default function TodoItem({
-  title,
-  description,
-  date,
-  completed,
-}: Todo) {
-  function toggleDropdown() {
-    console.log("test");
+export default function TodoItem(todo: Todo) {
+  const { id, title, description, date, completed } = todo;
+  const dispatch = useDispatch();
+
+  function toggleTodo() {
+    dispatch(updateTodo(todo));
   }
-
-  const toggleTodo = (e: any) => {
-    console.log(e.target.checked);
-  };
 
   return (
     <div className={styles.todo}>
@@ -43,7 +38,6 @@ export default function TodoItem({
           data-bs-toggle="dropdown"
           aria-expanded="false"
           id="moreDropdown"
-          onClick={toggleDropdown}
         />
         <ul className="dropdown-menu" aria-labelledby="moreDropdown">
           <li>
