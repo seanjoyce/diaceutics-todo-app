@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./TodoItem.module.scss";
 import { Todo } from "../../interfaces/Todo";
-import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { removeTodo, updateTodo } from "../../app/todoSlice";
+
+import { MdDelete, MdEdit } from "react-icons/md";
 
 export default function TodoItem(todo: Todo) {
   const { id, title, description, date, completed } = todo;
@@ -11,6 +12,10 @@ export default function TodoItem(todo: Todo) {
 
   function toggleTodo() {
     dispatch(updateTodo(todo));
+  }
+
+  function deleteTodo() {
+    dispatch(removeTodo(todo));
   }
 
   return (
@@ -33,20 +38,9 @@ export default function TodoItem(todo: Todo) {
         <div>{description}</div>
       </div>
 
-      <div className="dropdown">
-        <FiMoreHorizontal
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          id="moreDropdown"
-        />
-        <ul className="dropdown-menu" aria-labelledby="moreDropdown">
-          <li>
-            <a className="dropdown-item">Action</a>
-          </li>
-          <li>
-            <a className="dropdown-item">Another action</a>
-          </li>
-        </ul>
+      <div className="actions">
+        <MdEdit className={styles.edit} />
+        <MdDelete className={styles.delete} onClick={deleteTodo} />
       </div>
     </div>
   );

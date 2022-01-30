@@ -31,6 +31,14 @@
   font-size: 12px;
 }
 
-.more {
+.edit {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.delete {
+  color: rgb(219, 5, 5);
+  font-size: 1.5rem;
   cursor: pointer;
 }
