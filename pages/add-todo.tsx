@@ -1,13 +1,27 @@
 import { NextPage } from "next";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { Todo } from "../interfaces/Todo";
+import { addTodo } from "../app/todoSlice";
 
 const AddTodo: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [date, setDate] = useState<Date>();
 
+  const dispatch = useDispatch();
+
   const onSubmit = (event: any) => {
     event.preventDefault();
+
+    const todo: Todo = {
+      title,
+      description,
+      date: new Date(2022, 1, 1),
+      completed: false,
+    };
+
+    dispatch(addTodo(todo));
   };
 
   return (

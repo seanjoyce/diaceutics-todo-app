@@ -33,7 +33,7 @@ export default function TodoItem({
       <div className="flex-grow-1">
         <div className={styles.header}>
           <div className={styles.title}>{title}</div>
-          <div className={styles.date}>{date.toDateString()}</div>
+          <div className={styles.date}>{date.toString()}</div>
         </div>
         <div>{description}</div>
       </div>
