@@ -5,7 +5,12 @@ import { useDispatch } from "react-redux";
 import { removeTodo, updateTodo } from "../../app/todoSlice";
 import { MdDelete, MdEdit } from "react-icons/md";
 
-export default function TodoItem(todo: Todo) {
+interface TodoItemProps {
+  todo: Todo;
+  openEditTodoForm: () => void;
+}
+
+export default function TodoItem({ todo, openEditTodoForm }: TodoItemProps) {
   const { id, title, description, date, completed } = todo;
   const dispatch = useDispatch();
 
@@ -40,7 +45,7 @@ export default function TodoItem(todo: Todo) {
       </div>
 
       <div className="actions">
-        <MdEdit className={styles.edit} />
+        <MdEdit className={styles.edit} onClick={() => openEditTodoForm} />
         <MdDelete className={styles.delete} onClick={deleteTodo} />
       </div>
     </div>
