@@ -1,25 +1,32 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../../app/todoSlice";
 import { Todo } from "../../interfaces/Todo";
 import { v4 as uuidv4 } from "uuid";
+import Link from "next/link";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/router";
 
 export default function TodoForm(props: any) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | null>(new Date());
+
+  const router = useRouter();
 
   const onSubmit = (event: any) => {
     event.preventDefault();
+
     const todo: Todo = {
       id: uuidv4(),
       title,
       description,
-      date: new Date(2022, 1, 1),
+      date: date?.toString() ?? new Date().toString(),
       completed: false,
     };
     props.addTodo(todo);
+    router.push("/");
   };
+
   return (
     <form className="add-form" onSubmit={onSubmit}>
       <div className="mb-3">
@@ -36,6 +43,13 @@ export default function TodoForm(props: any) {
       </div>
 
       <div className="mb-3">
+        <label htmlFor="date" className="form-label">
+          Due Date
+        </label>
+        <DatePicker selected={date} onChange={(newDate) => setDate(newDate)} />
+      </div>
+
+      <div className="mb-3">
         <label htmlFor="title" className="form-label">
           Description
         </label>
@@ -47,9 +61,17 @@ export default function TodoForm(props: any) {
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
+
       <div className="d-flex justify-content-end">
-        <button className="btn btn-error mx-2">Cancel</button>
-        <button type="submit" className="btn btn-primary">
+        <Link href="/" passHref={true}>
+          <button className="btn btn-error mx-2">Cancel</button>
+        </Link>
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={!title || !description}
+        >
           Add todo
         </button>
       </div>

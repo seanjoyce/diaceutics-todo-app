@@ -3,7 +3,6 @@ import styles from "./TodoItem.module.scss";
 import { Todo } from "../../interfaces/Todo";
 import { useDispatch } from "react-redux";
 import { removeTodo, updateTodo } from "../../app/todoSlice";
-
 import { MdDelete, MdEdit } from "react-icons/md";
 
 export default function TodoItem(todo: Todo) {
@@ -33,7 +32,9 @@ export default function TodoItem(todo: Todo) {
       <div className="flex-grow-1">
         <div className={styles.header}>
           <div className={styles.title}>{title}</div>
-          <div className={styles.date}>{date.toString()}</div>
+          <div className={styles.date}>
+            {new Date(date).toLocaleDateString()}
+          </div>
         </div>
         <div>{description}</div>
       </div>
