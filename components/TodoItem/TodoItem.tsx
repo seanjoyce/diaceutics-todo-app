@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./TodoItem.module.scss";
 import { Todo } from "../../interfaces/Todo";
 import { useDispatch } from "react-redux";
-import { removeTodo, toggleTodo, updateTodo } from "../../app/todoSlice";
+import { removeTodo, toggleTodo } from "../../app/todoSlice";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Link from "next/link";
 
@@ -52,7 +52,9 @@ export default function TodoItem({ todo }: TodoItemProps) {
             query: { id: todo.id },
           }}
         >
-          <MdEdit className={styles.edit} />
+          <a>
+            <MdEdit className={styles.edit} />
+          </a>
         </Link>
 
         <MdDelete className={styles.delete} onClick={deleteTodo} />

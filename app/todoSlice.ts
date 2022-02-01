@@ -9,21 +9,21 @@ interface TodosState {
 const initialState = {
   todos: [
     {
-      id: uuidv4(),
+      id: "1",
       title: "Do the dishes",
       description: "Description 1",
       date: new Date(2022, 1, 10).toString(),
       completed: false,
     },
     {
-      id: uuidv4(),
+      id: "2",
       title: "Take out the bins",
       description: "Description 1",
       date: new Date(2022, 0, 1).toString(),
       completed: false,
     },
     {
-      id: uuidv4(),
+      id: "3",
       title: "Pay bills",
       description: "Description 2",
       date: new Date(2022, 1, 5).toString(),

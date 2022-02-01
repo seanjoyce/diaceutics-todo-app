@@ -5,14 +5,14 @@ import { Provider } from "react-redux";
 import store from "../../app/store";
 
 describe("TodoList", () => {
-  it("renders a heading", () => {
+  it("Renders the list", () => {
     render(
       <Provider store={store}>
         <TodoList></TodoList>
       </Provider>
     );
 
-    const todos = screen.getAllByTestId("todo-item");
-    console.log(todos);
+    const todos = screen.getByText("Take out the bins");
+    expect(todos).toBeTruthy();
   });
 });
