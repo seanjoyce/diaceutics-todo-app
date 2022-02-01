@@ -2,20 +2,20 @@ import React from "react";
 import styles from "./TodoItem.module.scss";
 import { Todo } from "../../interfaces/Todo";
 import { useDispatch } from "react-redux";
-import { removeTodo, updateTodo } from "../../app/todoSlice";
+import { removeTodo, toggleTodo } from "../../app/todoSlice";
 import { MdDelete, MdEdit } from "react-icons/md";
+import Link from "next/link";
 
 interface TodoItemProps {
   todo: Todo;
-  openEditTodoForm: () => void;
 }
 
-export default function TodoItem({ todo, openEditTodoForm }: TodoItemProps) {
+export default function TodoItem({ todo }: TodoItemProps) {
   const { id, title, description, date, completed } = todo;
   const dispatch = useDispatch();
 
-  function toggleTodo() {
-    dispatch(updateTodo(todo));
+  function completeTodo() {
+    dispatch(toggleTodo(todo));
   }
 
   function deleteTodo() {
@@ -30,7 +30,7 @@ export default function TodoItem({ todo, openEditTodoForm }: TodoItemProps) {
           id="completed"
           name="completed"
           checked={completed}
-          onChange={toggleTodo}
+          onChange={completeTodo}
         ></input>
       </div>
 
@@ -45,7 +45,18 @@ export default function TodoItem({ todo, openEditTodoForm }: TodoItemProps) {
       </div>
 
       <div className="actions">
-        <MdEdit className={styles.edit} onClick={() => openEditTodoForm} />
+        <Link
+          passHref={true}
+          href={{
+            pathname: "/edit-todo/[id]",
+            query: { id: todo.id },
+          }}
+        >
+          <a>
+            <MdEdit className={styles.edit} />
+          </a>
+        </Link>
+
         <MdDelete className={styles.delete} onClick={deleteTodo} />
       </div>
     </div>
