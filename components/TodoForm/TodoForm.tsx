@@ -29,6 +29,12 @@ export default function TodoForm(props: any) {
     }
   }, [router, todos]);
 
+  function updateDate(newDate: Date | null) {
+    if (newDate !== null) {
+      setTodo({ ...todo, date: newDate?.toString() ?? "" });
+    }
+  }
+
   const onSubmit = (event: any) => {
     event.preventDefault();
     if (!todo.id) todo.id = uuidv4();
@@ -62,9 +68,7 @@ export default function TodoForm(props: any) {
           </label>
           <DatePicker
             selected={new Date(todo.date)}
-            onChange={(newDate) =>
-              setTodo({ ...todo, date: newDate?.toString() ?? "" })
-            }
+            onChange={(newDate) => updateDate(newDate)}
           />
         </div>
 

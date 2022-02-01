@@ -1,6 +1,5 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { Todo } from "../interfaces/Todo";
-import { v4 as uuidv4 } from "uuid";
 
 interface TodosState {
   todos: Todo[];
