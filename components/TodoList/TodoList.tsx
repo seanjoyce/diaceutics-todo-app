@@ -24,21 +24,9 @@ export default function TodoList() {
 
   return (
     <div>
-      <button type="button" onClick={() => toogleAddTodo(!displayAddTodo)}>
-        Add Todo
-      </button>
-      {displayAddTodo && (
-        <TodoForm closeAddTodo={() => toogleAddTodo(false)}></TodoForm>
-      )}
-
-      {displayList() &&
-        todos.map((todo: Todo, index: number) => (
-          <TodoItem
-            todo={todo}
-            openEditTodoForm={() => toggleEditTodo(true)}
-            key={index}
-          ></TodoItem>
-        ))}
+      {todos.map((todo: Todo, index: number) => (
+        <TodoItem data-testid="todo-item" todo={todo} key={index}></TodoItem>
+      ))}
     </div>
   );
 }

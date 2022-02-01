@@ -1,69 +1,51 @@
 import React, { useEffect, useState } from "react";
-import styles from "./TodoForm.module.scss";
 import { Todo } from "../../interfaces/Todo";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { addTodo, updateTodo } from "../../app/todoSlice";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "../../interfaces/RootState";
+import { readSync } from "fs";
+import Link from "next/link";
 
-interface TodoItemProps {
-  todo?: Todo;
-  closeAddTodo: () => void;
-}
-
-export default function TodoForm({ todo, closeAddTodo }: TodoItemProps) {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [date, setDate] = useState<Date | null>(new Date());
-
-  const dispatch = useDispatch();
+export default function TodoForm(props: any) {
+  const [todo, setTodo] = useState<Todo>({
+    id: null,
+    title: "",
+    description: "",
+    date: new Date().toISOString(),
+    completed: false,
+  });
+  const todos = useSelector((state: RootState) => state.todoState.todos);
+  const router = useRouter();
 
   useEffect(() => {
-    if (todo) {
-      setTitle(todo.title);
-      setDescription(todo.description);
-      setDate(new Date(todo.date));
+    if (router.isReady) {
+      const { id } = router.query;
+      if (id) {
+        const foundTodo = todos.find((todo) => id === todo.id);
+        if (foundTodo) setTodo(foundTodo);
+      }
     }
-  }, [todo]);
-
-  function addNewTodo() {
-    const todo: Todo = {
-      id: uuidv4(),
-      title,
-      description,
-      date: date?.toString() ?? new Date().toString(),
-      completed: false,
-    };
-    dispatch(addTodo(todo));
-  }
-
-  function editTodo() {
-    if (todo) {
-      const updatedTodo: Todo = {
-        id: todo.id,
-        title,
-        description,
-        date: date?.toString() ?? new Date().toString(),
-        completed: todo.completed,
-      };
-      dispatch(updateTodo(updatedTodo));
-    }
-  }
+  }, [router, todos]);
 
   const onSubmit = (event: any) => {
     event.preventDefault();
-    if (todo) {
-      editTodo();
+    if (!todo.id) todo.id = uuidv4();
+    if (router.pathname === "/add-todo") {
+      props.addTodo(todo);
     } else {
-      addNewTodo();
+      props.editTodo(todo);
     }
-    dispatch(addTodo(todo));
-    closeAddTodo();
+    router.push("/");
   };
 
-  return (
-    <div className={styles.todo}>
+  if (todo) {
+    return (
       <form className="add-form" onSubmit={onSubmit}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
@@ -73,8 +55,8 @@ export default function TodoForm({ todo, closeAddTodo }: TodoItemProps) {
             type="text"
             className="form-control"
             id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={todo.title}
+            onChange={(e) => setTodo({ ...todo, title: e.target.value })}
           ></input>
         </div>
 
@@ -83,8 +65,10 @@ export default function TodoForm({ todo, closeAddTodo }: TodoItemProps) {
             Due Date
           </label>
           <DatePicker
-            selected={date}
-            onChange={(newDate) => setDate(newDate)}
+            selected={new Date(todo.date)}
+            onChange={(newDate) =>
+              setTodo({ ...todo, date: newDate?.toString() ?? "" })
+            }
           />
         </div>
 
@@ -95,29 +79,28 @@ export default function TodoForm({ todo, closeAddTodo }: TodoItemProps) {
           <textarea
             className="form-control"
             id="title"
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+            value={todo.description}
+            onChange={(e) =>
+              setTodo({ ...todo, description: e.currentTarget.value })
+            }
           ></textarea>
         </div>
 
         <div className="d-flex justify-content-end">
-          <button
-            type="button"
-            className="btn btn-error mx-2"
-            onClick={() => closeAddTodo()}
-          >
-            Cancel
-          </button>
+          <Link href="/" passHref={true}>
+            <button className="btn btn-error mx-2">Cancel</button>
+          </Link>
+
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={!title || !description}
+            disabled={!todo.title || !todo.description}
           >
-            Add todo
+            {todo.id === null ? "Add todo" : "Update todo"}
           </button>
         </div>
       </form>
-    </div>
-  );
+    );
+  } else return null;
 }

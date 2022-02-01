@@ -48,11 +48,18 @@ const todoSlice = createSlice({
       );
     },
     updateTodo(state, action) {
+      const index = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      state.todos[index] = action.payload;
+    },
+    toggleTodo(state, action) {
       const todo = state.todos.find((todo) => todo.id === action.payload.id);
       if (todo) todo.completed = !todo.completed;
     },
   },
 });
 
-export const { hydrate, addTodo, removeTodo, updateTodo } = todoSlice.actions;
+export const { hydrate, addTodo, removeTodo, updateTodo, toggleTodo } =
+  todoSlice.actions;
 export default todoSlice.reducer;
