@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Todo } from "../../interfaces/Todo";
-import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
-import { addTodo, updateTodo } from "../../app/todoSlice";
+import Link from "next/link";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../interfaces/RootState";
-import { readSync } from "fs";
-import Link from "next/link";
 
 export default function TodoForm(props: any) {
   const [todo, setTodo] = useState<Todo>({

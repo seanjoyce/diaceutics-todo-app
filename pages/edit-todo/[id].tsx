@@ -4,7 +4,6 @@ import { updateTodo } from "../../app/todoSlice";
 import TodoForm from "../../components/TodoForm/TodoForm";
 import { Todo } from "../../interfaces/Todo";
 
-
 const EditTodo: NextPage = () => {
   const dispatch = useDispatch();
 
