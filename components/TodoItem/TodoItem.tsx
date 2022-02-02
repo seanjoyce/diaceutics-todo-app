@@ -11,7 +11,7 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const { id, title, description, date, completed } = todo;
+  const { title, description, date, completed } = todo;
   const dispatch = useDispatch();
 
   function completeTodo() {

@@ -10,7 +10,7 @@ export default function TodoList() {
   return (
     <div>
       {todos.map((todo: Todo, index: number) => (
-        <TodoItem data-testid="todo-item" todo={todo} key={index}></TodoItem>
+        <TodoItem todo={todo} key={index}></TodoItem>
       ))}
     </div>
   );
